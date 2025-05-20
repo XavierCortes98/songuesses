@@ -1,2 +1,34 @@
-<p>main-game works!</p>
-<audio #audioPlayer [src]="track?.preview" controls></audio>
+<!-- <audio #audioPlayer [src]="track?.preview" controls></audio> -->
+<div class="gameContainer">
+  <div class="attemptsContainer">
+    <div class="attemptDiv" *ngFor="let attempts of guesses">
+      <p>{{ attempts }}</p>
+    </div>
+  </div>
+
+  <div class="inputsContainer">
+    <mat-icon>play_arrow</mat-icon>
+    <div class="inputAutocomplete">
+      <div class="searchBox">
+        <mat-icon>search</mat-icon>
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="onSearchTermChange($event)"
+          placeholder="Search for a song"
+        />
+      </div>
+      <div *ngIf="results.length" class="autocompleteBox">
+        <button *ngFor="let track of results">
+          <span
+            [innerHTML]="highlight(track.title + ' - ' + track.artist.name)"
+          ></span>
+        </button>
+      </div>
+    </div>
+    <div class="buttonsContainer">
+      <button (click)="skipAttempt()">Skip</button>
+      <button>Submit</button>
+    </div>
+  </div>
+</div>

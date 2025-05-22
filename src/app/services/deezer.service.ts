@@ -7,20 +7,24 @@ import { Song } from '../models/song.model';
   providedIn: 'root',
 })
 export class DeezerService {
-  private readonly baseDeezerUrl = 'http://localhost:3000/';
+  private readonly baseDeezerUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient) {}
 
   searchSong(query: string): Observable<Song[]> {
     return this.http.get<Song[]>(
-      this.baseDeezerUrl + `api/deezer/search?q=${encodeURIComponent(query)}`
+      this.baseDeezerUrl + `/api/deezer/search?q=${encodeURIComponent(query)}`
     );
   }
 
   getSongToGuess(query: string): Observable<any> {
     return this.http.get<any>(
       this.baseDeezerUrl +
-        `api/deezer/random-popular?q=${encodeURIComponent(query)}`
+        `/api/deezer/random-popular?q=${encodeURIComponent(query)}`
     );
+  }
+
+  checkSongGuess(songId: string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.baseDeezerUrl}/check-song/${songId}`);
   }
 }

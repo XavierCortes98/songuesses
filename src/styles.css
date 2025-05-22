@@ -14,3 +14,34 @@ body {
   background-color: var(--background-color);
   color: white;
 }
+
+.mdButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 46px;
+  width: 96px;
+  font-size: 1.25rem;
+  padding: 16px 12px;
+}
+
+.greenBtn {
+  color: white;
+  background-color: #55b725;
+  box-shadow: rgb(42, 91, 18) 0px 3px;
+  border-radius: 8px;
+}
+
+.greenBtn:disabled {
+  color: white;
+  background-color: #2f571e;
+  box-shadow: none;
+}
+
+.grayBtn {
+  color: black;
+  background-color: #c5c5c5;
+  box-shadow: #626262 0px 3px;
+  border: 1px solid #626262;
+  border-radius: 8px;
+}

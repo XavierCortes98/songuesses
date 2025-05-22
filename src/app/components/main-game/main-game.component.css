@@ -3,14 +3,49 @@
   flex-direction: column;
   flex-wrap: wrap;
   align-content: center;
+  justify-content: center;
+  gap: 1.25rem;
+  h1 {
+    text-align: center;
+  }
 }
 
-.searchBox {
+.attemptDiv {
   display: flex;
   align-items: center;
-  input {
-    border: none;
+  justify-content: center;
+  height: 48px;
+  width: 100%;
+  background-color: #303436;
+  border: 2px solid #7b7b7b;
+  border-radius: 16px;
+  position: relative;
+
+  mat-icon {
+    display: inline-block;
+    position: absolute;
+    left: 0.75rem;
   }
+
+  span {
+    width: 100%;
+    flex: 1;
+    margin: 0;
+    text-align: center;
+    font-size: 1.5rem;
+  }
+}
+
+.correct {
+  background-color: #55b725;
+}
+
+.incorrect {
+  background-color: #e23d3d;
+}
+
+.skipped {
+  background-color: #5f686d;
 }
 
 .attemptsContainer {
@@ -20,47 +55,81 @@
   justify-content: center;
   width: 50%;
   gap: 1.5rem;
-  .attemptDiv {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 60px;
-    width: 100%;
-    background-color: #303436;
-  }
 }
 
 .inputsContainer {
   display: flex;
+  position: relative;
   flex-direction: column;
   align-items: center;
   flex-wrap: wrap;
+  gap: 1.5rem;
+
   .inputAutocomplete {
     width: 100%;
-    input {
-      flex: 1;
-    }
   }
-  .buttonsContainer {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
+}
+
+.playButton {
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 999px;
+}
+
+.skipButton {
+}
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  border: 2px solid rgb(138, 138, 138);
+  color: rgb(138, 138, 138);
+  align-content: center;
+  padding: 8px 12px;
+  gap: 12px;
+  transition: border-color 0.2s ease, color 0.2s ease;
+  border-radius: 16px;
+  mat-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 32px;
   }
+
+  input {
+    flex: 1;
+    height: 36px;
+    border: none;
+    background: transparent;
+    color: white;
+  }
+  input:focus-visible {
+    outline: none;
+  }
+}
+
+.searchBox:focus-within {
+  border-color: #ffffff;
+  color: #ffffff;
 }
 
 .autocompleteBox {
   display: flex;
   flex-direction: column;
   width: fit-content;
-  background-color: white;
+  position: absolute;
   max-height: 200px;
   overflow: auto;
+  border: 2px solid rgb(138, 138, 138);
+  border-radius: 8px;
+  width: 100%;
   button {
     font-size: medium;
-    background-color: transparent;
+    background-color: #161819;
     border: none;
     padding: 24px 12px;
     transition: background-color 0.2s ease;
+    color: white;
   }
 
   button:hover {
@@ -71,4 +140,10 @@
 
 .highlight {
   font-weight: 900;
+}
+
+.buttonsContainer {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
 }

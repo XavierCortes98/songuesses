@@ -1,34 +1,66 @@
 <!-- <audio #audioPlayer [src]="track?.preview" controls></audio> -->
 <div class="gameContainer">
+  <h1>Song Guesses</h1>
+
   <div class="attemptsContainer">
-    <div class="attemptDiv" *ngFor="let attempts of guesses">
-      <p>{{ attempts }}</p>
+    <div
+      class="attemptDiv"
+      *ngFor="let attempt of guesses"
+      [ngClass]="{
+        correct: attempt.isCorrect === true,
+        incorrect: attempt.isCorrect === false && !attempt.skipped,
+        skipped: attempt.skipped
+      }"
+    >
+      <ng-container *ngIf="attempt.skipped"
+        ><mat-icon>arrow_forward</mat-icon> <span>SKIPPED</span></ng-container
+      >
+
+      <ng-container *ngIf="attempt.isCorrect === false && !attempt.skipped"
+        ><mat-icon>cancel</mat-icon>
+        <span>{{ attempt.songName }}</span></ng-container
+      >
+
+      <ng-container *ngIf="attempt.isCorrect === true && !attempt.skipped"
+        ><mat-icon>check_circle</mat-icon>
+        <span>{{ attempt.songName }}</span></ng-container
+      >
     </div>
   </div>
 
-  <div class="inputsContainer">
-    <mat-icon>play_arrow</mat-icon>
+  <form class="inputsContainer" (ngSubmit)="onSubmit()" [formGroup]="form">
+    <button type="button" class="playButton greenBtn" (click)="playAudio()">
+      <mat-icon>play_arrow</mat-icon>
+    </button>
     <div class="inputAutocomplete">
       <div class="searchBox">
         <mat-icon>search</mat-icon>
         <input
           type="text"
-          [(ngModel)]="searchTerm"
-          (ngModelChange)="onSearchTermChange($event)"
+          formControlName="song"
+          (input)="onSearchTermChange($event)"
           placeholder="Search for a song"
         />
       </div>
       <div *ngIf="results.length" class="autocompleteBox">
-        <button *ngFor="let track of results">
+        <button *ngFor="let song of results" (click)="setSongGuess(song)">
           <span
-            [innerHTML]="highlight(track.title + ' - ' + track.artist.name)"
+            [innerHTML]="highlight(song.title + ' - ' + song.artist.name)"
           ></span>
         </button>
       </div>
     </div>
     <div class="buttonsContainer">
-      <button (click)="skipAttempt()">Skip</button>
-      <button>Submit</button>
+      <button type="button" (click)="skipAttempt()" class="grayBtn mdButton">
+        Skip
+      </button>
+      <button
+        type="submit"
+        class="greenBtn mdButton"
+        [disabled]="!isValidSelection"
+      >
+        Submit
+      </button>
     </div>
-  </div>
+  </form>
 </div>

@@ -7,14 +7,16 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MainGameComponent } from './components/main-game/main-game.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EndGameDialogComponent } from './components/end-game-dialog/end-game-dialog.component';
 
 @NgModule({
-  declarations: [AppComponent, MainGameComponent],
+  declarations: [AppComponent, MainGameComponent, EndGameDialogComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -26,6 +28,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatSelectModule,
     MatIconModule,
     MatFormFieldModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

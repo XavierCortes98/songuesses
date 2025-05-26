@@ -1,0 +1,34 @@
+<div class="dialogContainer">
+  <div class="">
+    <ng-container *ngIf="data.didPlayerWin; else loseTemplate">
+      <div class="header victory">
+        <h1>You Won</h1>
+      </div>
+    </ng-container>
+
+    <ng-template #loseTemplate>
+      <div class="header endGame">
+        <h1>Game Over</h1>
+      </div>
+    </ng-template>
+  </div>
+  <div class="contentContainer">
+    <div class="songInfo">
+      <ng-container *ngIf="!data.didPlayerWin">
+        <span>Close one! Today's track was:</span>
+      </ng-container>
+      <strong>{{ data.song?.title }}</strong>
+      <span>{{ data.song?.artist.name }}</span>
+      <img [src]="data.song?.album.cover_medium" alt="" />
+    </div>
+    <div class="buttonsContainer">
+      <button class="greenBtn largeButton" (click)="playAgain()">
+        Play Again
+      </button>
+
+      <button type="button" class="playButton greenBtn" (click)="playAudio()">
+        <mat-icon>{{ isAudioPlaying ? "pause" : "play_arrow" }}</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

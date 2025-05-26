@@ -25,6 +25,16 @@ body {
   padding: 16px 12px;
 }
 
+.largeButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 126px;
+  font-size: 1.25rem;
+  padding: 16px 12px;
+}
+
 .greenBtn {
   color: white;
   background-color: #55b725;
@@ -44,4 +54,46 @@ body {
   box-shadow: #626262 0px 3px;
   border: 1px solid #626262;
   border-radius: 8px;
+}
+
+/* Necesitas ::ng-deep para penetrar la encapsulación */
+::ng-deep .transparent-white .mat-form-field-outline {
+  border-color: transparent !important;
+}
+
+::ng-deep .transparent-white .mat-form-field-outline-thick {
+  border-color: transparent !important;
+}
+
+::ng-deep .transparent-white .mat-form-field-infix {
+  background-color: transparent !important;
+  color: white !important;
+}
+
+::ng-deep .transparent-white .mat-form-field-label {
+  color: white !important;
+}
+
+::ng-deep .transparent-white.mat-focused .mat-form-field-label {
+  color: white !important;
+}
+
+::ng-deep .transparent-white .mat-select-trigger {
+  color: white !important;
+}
+
+/* Dropdown panel */
+::ng-deep .transparent-white-panel.mat-select-panel {
+  background-color: transparent !important;
+  color: white !important;
+}
+
+/* Opciones del dropdown */
+::ng-deep .transparent-white-panel .mat-option {
+  background-color: transparent !important;
+  color: white !important;
+}
+
+::ng-deep .transparent-white-panel .mat-option.mat-active {
+  background-color: rgba(255, 255, 255, 0.2) !important;
 }

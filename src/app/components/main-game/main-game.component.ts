@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { debounce, debounceTime } from 'rxjs';
 import { Guess } from 'src/app/models/guess.model';
 import { Song } from 'src/app/models/song.model';
 import { DeezerService } from 'src/app/services/deezer.service';
+import { EndGameDialogComponent } from '../end-game-dialog/end-game-dialog.component';
 
 @Component({
   selector: 'app-main-game',
@@ -39,6 +41,24 @@ export class MainGameComponent implements OnInit {
     },
   ];
 
+  genres = [
+    'Pop',
+    'Rock',
+    'Hip Hop',
+    'Rap',
+    'R&B',
+    'Electronic',
+    'Reggae',
+    'Latin',
+    'Metal',
+    'Funk',
+    'Dance',
+    'Indie',
+    'Punk',
+    'Trap',
+    'K-Pop',
+  ];
+
   searchTimeout!: ReturnType<typeof setTimeout>;
 
   isValidSelection = false;
@@ -51,11 +71,15 @@ export class MainGameComponent implements OnInit {
   song!: Song;
   results: Song[] = [];
 
-  constructor(private deezerService: DeezerService) {}
+  didPlayerWin = false;
+
+  constructor(private deezerService: DeezerService, public dialog: MatDialog) {}
 
   ngOnInit() {
     this.form = new FormGroup({
       song: new FormControl(''),
+      genre: new FormControl(''),
+      artist: new FormControl(''),
     });
 
     this.deezerService.getSongToGuess('Bad Bunny').subscribe({
@@ -130,8 +154,8 @@ export class MainGameComponent implements OnInit {
   }
 
   skipAttempt() {
-    if (this.currentAttempt === this.guesses.length) {
-      //Resolver
+    if (this.currentAttempt === this.guesses.length - 1) {
+      this.openDialog();
       return;
     }
     this.guesses[this.currentAttempt].skipped = true;
@@ -158,6 +182,9 @@ export class MainGameComponent implements OnInit {
       this.songControl?.setValue('');
     } else if (validity) {
       this.guesses[this.currentAttempt].isCorrect = true;
+      this.didPlayerWin = true;
+      this.openDialog();
+      this.songControl?.setValue('');
       this.guesses[this.currentAttempt].songName = `${
         this.selectedSong!.title
       } - ${this.selectedSong!.artist.name}`;
@@ -189,5 +216,68 @@ export class MainGameComponent implements OnInit {
       regex,
       (match) => `<strong class="highlight">${match}</strong>`
     );
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(EndGameDialogComponent, {
+      width: '400px',
+      height: '600px',
+      disableClose: true,
+      data: { didPlayerWin: this.didPlayerWin, song: this.song },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'playAgain') {
+        this.resetGame(); // Tu función para reiniciar el juego
+      }
+    });
+  }
+
+  resetGame() {
+    this.guesses = [
+      {
+        isCorrect: null,
+        songName: '',
+        skipped: false,
+      },
+      {
+        isCorrect: null,
+        songName: '',
+        skipped: false,
+      },
+      {
+        isCorrect: null,
+        songName: '',
+        skipped: false,
+      },
+      {
+        isCorrect: null,
+        songName: '',
+        skipped: false,
+      },
+      {
+        isCorrect: null,
+        songName: '',
+        skipped: false,
+      },
+    ];
+    this.currentAttempt = 0;
+    this.didPlayerWin = false;
+    this.selectedSong = null;
+    this.results = [];
+    this.songControl?.setValue('');
+    this.deezerService.getSongToGuess('Bad Bunny').subscribe({
+      next: (track) => {
+        console.log(track.title);
+        this.song = track;
+        this.audio = new Audio(this.song.preview);
+        this.audio.load();
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    });
+    this.isValidSelection = false;
+    this.form.reset();
   }
 }

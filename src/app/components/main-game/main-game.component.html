@@ -1,6 +1,18 @@
 <!-- <audio #audioPlayer [src]="track?.preview" controls></audio> -->
-<div class="gameContainer">
+<form class="gameContainer" (ngSubmit)="onSubmit()" [formGroup]="form">
   <h1>Song Guesses</h1>
+
+  <div>
+    <mat-form-field appearance="outline" class="transparent-white">
+      <mat-label>genre</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let genre of genres" [value]="genre">
+          {{ genre }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <input type="text" formControlName="artist" placeholder="Artist" />
+  </div>
 
   <div class="attemptsContainer">
     <div
@@ -28,7 +40,7 @@
     </div>
   </div>
 
-  <form class="inputsContainer" (ngSubmit)="onSubmit()" [formGroup]="form">
+  <div class="inputsContainer">
     <button type="button" class="playButton greenBtn" (click)="playAudio()">
       <mat-icon>play_arrow</mat-icon>
     </button>
@@ -62,5 +74,5 @@
         Submit
       </button>
     </div>
-  </form>
-</div>
+  </div>
+</form>

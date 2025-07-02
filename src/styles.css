@@ -56,7 +56,6 @@ body {
   border-radius: 8px;
 }
 
-/* Necesitas ::ng-deep para penetrar la encapsulación */
 ::ng-deep .transparent-white .mat-form-field-outline {
   border-color: transparent !important;
 }
